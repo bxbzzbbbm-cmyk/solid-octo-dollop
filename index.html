@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Crypto REST PIN API</title>
+</head>
+<body style="text-align:center;margin-top:80px;">
+
+<h2>REST API /api/create.json (Crypto PIN)</h2>
+
+<button onclick="generate()">Generate PIN</button>
+
+<pre id="out">---</pre>
+
+<script>
+/**
+ * REAL CRYPTO 4-DIGIT PIN GENERATOR
+ */
+function generatePin() {
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);
+  return (1000 + (array[0] % 9000));
+}
+
+/**
+ * FAKE REST API RESPONSE BUILDER
+ */
+async function generate() {
+
+  const url = "/api/create.json";
+
+  let response;
+
+  // simulate REST endpoint logic
+  if (url === "/api/create.json") {
+
+    const pin = generatePin();
+
+    response = {
+      success: true,
+      pin: pin,
+      path: url,
+      engine: "crypto.getRandomValues"
+    };
+  } else {
+    response = {
+      success: false,
+      error: "invalid endpoint"
+    };
+  }
+
+  document.getElementById("out").innerText =
+    JSON.stringify(response, null, 2);
+}
+</script>
+
+</body>
+</html>
